@@ -42,4 +42,23 @@ public class homePage extends baseTest{
         homePage.assertSuccessfulLogin(name);
     }
 
+
+    @Test(priority = 4)
+    public void checkPhonesCategoryHasItems(){
+        homePage.selectPhonesCategory();
+        homePage.assertCategoryHasItems();
+    }
+
+    @Test(priority = 5)
+    public void checkLaptopsCategoryHasItems(){
+        homePage.selectLaptopsCategory();
+        homePage.assertCategoryHasItems();
+    }
+
+    @Test(priority = 6)
+    public void checkMonitorsCategoryHasItems(){
+        homePage.selectMonitorsCategory();
+        homePage.assertCategoryHasItems();
+    }
+
 }

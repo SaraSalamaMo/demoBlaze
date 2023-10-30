@@ -20,6 +20,11 @@ public class HomePage{
     private final By signUp = By.cssSelector("[onclick = 'register()']");
     private final By login = By.xpath("//button[@onclick='logIn()']");
     private final By nameOfUser = By.id("nameofuser");
+    private final By phones = By.cssSelector("[onclick=\"byCat('phone')\"]");
+    private final By laptops = By.cssSelector("[onclick=\"byCat('notebook')\"]");
+    private final By monitors = By.cssSelector("[onclick=\"byCat('monitor')\"]");
+    private final By items = By.cssSelector(".card");
+
     private  Alert alert ;
 
     public HomePage (WebDriver driver){
@@ -72,6 +77,18 @@ public class HomePage{
         driver.findElement(login).click();
     }
 
+    public void selectPhonesCategory(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(phones)).click();
+    }
+
+    public void selectLaptopsCategory(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(laptops)).click();
+    }
+
+    public void selectMonitorsCategory(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(monitors)).click();
+    }
+
     public void closeAlert(){
         alert.accept();
     }
@@ -95,5 +112,10 @@ public class HomePage{
         String actualNameOfUser = wait.until(ExpectedConditions.visibilityOfElementLocated(nameOfUser)).getText();
         String expectedNameOfUser = "Welcome " + name;
         Assert.assertEquals(actualNameOfUser, expectedNameOfUser);
+    }
+
+    public void assertCategoryHasItems(){
+        int itemsCount = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(items)).size();
+        Assert.assertTrue(itemsCount > 0);
     }
 }

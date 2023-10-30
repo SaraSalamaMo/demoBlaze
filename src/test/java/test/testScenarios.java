@@ -1,13 +1,10 @@
 package test;
 
 import com.github.javafaker.Faker;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import pages.ItemPage;
 
-import java.lang.reflect.Method;
-
-public class homePage extends baseTest{
+public class testScenarios extends baseTest{
 
     private final Faker faker = new Faker();
     private ItemPage itemPage;
@@ -73,6 +70,16 @@ public class homePage extends baseTest{
     public void deleteItemFromCart(){
         itemPage.openCart();
         itemPage.deleteItemFromCart();
+    }
+
+    @Test(priority = 8)
+    public void placeOrder(){
+        String name = "Sara"; String country = "Egypt"; String city = "Cairo";
+        String card = "123245678"; String month = "12"; String year = "27";
+        itemPage.openPlaceOrderForm();
+        itemPage.purchase(name,country,city,card,month,year);
+        itemPage.assertSuccessfulPurchase();
+
     }
 
 }

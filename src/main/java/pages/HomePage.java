@@ -12,10 +12,15 @@ public class HomePage{
     private WebDriver driver;
     private WebDriverWait wait;
     private final By signUpForm = By.id("signin2");
+    private final By loginForm = By.id("login2");
     private final  By userName = By.id("sign-username");
     private final By password = By.id("sign-password");
+    private final By loginUserName = By.id("loginusername");
+    private final By loginPassword = By.id("loginpassword");
     private final By signUp = By.cssSelector("[onclick = 'register()']");
-    public static Alert alert ;
+    private final By login = By.xpath("//button[@onclick='logIn()']");
+    private final By nameOfUser = By.id("nameofuser");
+    private  Alert alert ;
 
     public HomePage (WebDriver driver){
         this.driver = driver;
@@ -26,14 +31,20 @@ public class HomePage{
         driver.findElement(signUpForm).click();
     }
 
+    public void openLoginForm(){
+        driver.findElement(loginForm).click();
+    }
+
+
     public void setUserName(String userName){
         wait.until(ExpectedConditions.elementToBeClickable(this.userName)).sendKeys(userName);
     }
 
+
     public void setPassword(String password){
         driver.findElement(this.password).sendKeys(password);
-
     }
+
 
     public void clearUserNameAndPassword(){
         driver.findElement(userName).clear();
@@ -47,13 +58,24 @@ public class HomePage{
 
     }
 
+    public void setLoginUserName (String userName){
+        wait.until(ExpectedConditions.elementToBeClickable(loginUserName)).sendKeys(userName);
+    }
+
+    public void setLoginPassword (String password){
+        driver.findElement(loginPassword).sendKeys(password);
+    }
+
+    public void login(String userName, String password){
+        setLoginUserName(userName);
+        setLoginPassword(password);
+        driver.findElement(login).click();
+    }
+
     public void closeAlert(){
         alert.accept();
     }
 
-    public void login(){
-        
-    }
 
     public void assertFailedSignUp(){
         String actualSignUpMessage = alert.getText();
@@ -67,5 +89,11 @@ public class HomePage{
         String expectedSignUpMessage = "Sign up successful.";
         Assert.assertEquals(actualSignUpMessage, expectedSignUpMessage);
 
+    }
+
+    public void assertSuccessfulLogin(String name){
+        String actualNameOfUser = wait.until(ExpectedConditions.visibilityOfElementLocated(nameOfUser)).getText();
+        String expectedNameOfUser = "Welcome " + name;
+        Assert.assertEquals(actualNameOfUser, expectedNameOfUser);
     }
 }

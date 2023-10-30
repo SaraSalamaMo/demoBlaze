@@ -12,6 +12,9 @@ public class baseTest{
 
     public WebDriver driver;
     public HomePage homePage;
+    // Given: SaraSalama is a registered user in demoblaze site
+    public final String name = "SaraSalama";
+    public final String password = "SaraSalama";
 
 
     @BeforeClass
@@ -36,7 +39,7 @@ public class baseTest{
     }
 
 
-    @AfterClass
+//    @AfterClass
     public void tearDown(){
         driver.close();
     }

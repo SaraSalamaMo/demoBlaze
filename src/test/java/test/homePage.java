@@ -6,17 +6,17 @@ import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 
-public class signUp extends baseTest{
+public class homePage extends baseTest{
 
     private final Faker faker = new Faker();
 
 
-    @Test
+    @Test(priority = 1)
     public void failedSignUp(){
 
         homePage.openSignUpForm();
-        homePage.setUserName("sara");
-        homePage.setPassword("sara");
+        homePage.setUserName(name);
+        homePage.setPassword(password);
         homePage.signUp();
         homePage.assertFailedSignUp();
 
@@ -24,7 +24,7 @@ public class signUp extends baseTest{
 
 
 
-    @Test
+    @Test(priority = 2)
     public void successfulSignUp(){
 
         homePage.setUserName(faker.name().username());
@@ -33,6 +33,13 @@ public class signUp extends baseTest{
         homePage.assertSuccessfulSignUp();
         homePage.closeAlert();
 
+    }
+
+    @Test(priority = 3)
+    public void successfulLogin(){
+        homePage.openLoginForm();
+        homePage.login(name,password);
+        homePage.assertSuccessfulLogin(name);
     }
 
 }

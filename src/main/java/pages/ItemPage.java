@@ -15,14 +15,15 @@ public class ItemPage {
     private final By addToCart = By.xpath("//*[@id=\"tbodyid\"]/div[2]/div/a");
     private final By cart = By.id("cartur");
     private final By deleteItem = By.xpath("//*[@id=\"tbodyid\"]/tr/td[4]/a");
-    private final By placeOrderForm = By.linkText("Place Order");
-    private final By name = By.id("name");
+    private final By placeOrderForm = By.xpath("//*[@id=\"page-wrapper\"]/div/div[2]/button");
+    private final By name = By.xpath("//*[@id=\"name\"]");
     private final By country = By.id("country");
     private final By city = By.id("city");
     private final By card = By.id("card");
     private final By month = By.id("month");
     private final By year = By.id("year");
     private final By purchase = By.cssSelector("[onclick=\"purchaseOrder()\"]");
+    private final By confirmationMessage = By.xpath("/html/body/div[10]/h2");
     private Alert alert;
 
 
@@ -44,23 +45,25 @@ public class ItemPage {
         driver.findElement(cart).click();
     }
 
-    public void openPlaceOrderForm(){
-        driver.findElement(placeOrderForm).click();
-    }
 
     public void deleteItemFromCart(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(deleteItem)).click();
     }
 
+
+    public void openPlaceOrderForm(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(placeOrderForm)).click();
+    }
+
     public void successfulCheckout(String name, String country, String city, String card, String month, String year){
-        driver.findElement(this.name).sendKeys(name);
+        wait.until(ExpectedConditions.elementToBeClickable(this.name)).sendKeys(name);
         driver.findElement(this.country).sendKeys(country);
         driver.findElement(this.city).sendKeys(city);
         driver.findElement(this.card).sendKeys(card);
         driver.findElement(this.month).sendKeys(month);
         driver.findElement(this.year).sendKeys(year);
         driver.findElement(purchase).click();
-        alert = wait.until(ExpectedConditions.alertIsPresent());
+
     }
 
     public void assertItemAddedToCartSuccessfully(){
@@ -70,7 +73,7 @@ public class ItemPage {
     }
 
     public void assertSuccessfulPurchase(){
-        String actualPopUpMessage = alert.getText();
+        String actualPopUpMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(confirmationMessage)).getText();
         String expectedMessage = "Thank you for your purchase!";
         Assert.assertEquals(actualPopUpMessage, expectedMessage);
     }

@@ -52,7 +52,7 @@ public class ItemPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(deleteItem)).click();
     }
 
-    public void purchase(String name, String country, String city, String card, String month, String year){
+    public void successfulCheckout(String name, String country, String city, String card, String month, String year){
         driver.findElement(this.name).sendKeys(name);
         driver.findElement(this.country).sendKeys(country);
         driver.findElement(this.city).sendKeys(city);

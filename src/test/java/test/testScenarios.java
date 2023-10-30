@@ -22,7 +22,6 @@ public class testScenarios extends baseTest{
     }
 
 
-
     @Test(priority = 2)
     public void successfulSignUp(){
 
@@ -33,6 +32,8 @@ public class testScenarios extends baseTest{
         homePage.closeAlert();
 
     }
+
+    //ToDo failed login
 
     @Test(priority = 3)
     public void successfulLogin(){
@@ -73,11 +74,11 @@ public class testScenarios extends baseTest{
     }
 
     @Test(priority = 8)
-    public void placeOrder(){
+    public void createSuccessfulCheckout(){
         String name = "Sara"; String country = "Egypt"; String city = "Cairo";
         String card = "123245678"; String month = "12"; String year = "27";
         itemPage.openPlaceOrderForm();
-        itemPage.purchase(name,country,city,card,month,year);
+        itemPage.successfulCheckout(name,country,city,card,month,year);
         itemPage.assertSuccessfulPurchase();
 
     }

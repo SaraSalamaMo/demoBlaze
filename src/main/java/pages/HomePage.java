@@ -3,9 +3,12 @@ package pages;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.util.List;
 
 public class HomePage{
 
@@ -23,8 +26,8 @@ public class HomePage{
     private final By phones = By.cssSelector("[onclick=\"byCat('phone')\"]");
     private final By laptops = By.cssSelector("[onclick=\"byCat('notebook')\"]");
     private final By monitors = By.cssSelector("[onclick=\"byCat('monitor')\"]");
-    private final By items = By.cssSelector(".card");
-
+    private final By items = By.cssSelector(".card-title");
+    private List<WebElement> list;
     private  Alert alert ;
 
     public HomePage (WebDriver driver){
@@ -81,12 +84,23 @@ public class HomePage{
         wait.until(ExpectedConditions.visibilityOfElementLocated(phones)).click();
     }
 
+
     public void selectLaptopsCategory(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(laptops)).click();
     }
 
     public void selectMonitorsCategory(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(monitors)).click();
+    }
+
+    public void getItemsList(){
+        list =  wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(items));
+    }
+
+
+    public ItemPage selectRandomItem(){
+         list.get(0).click();
+         return new ItemPage(driver);
     }
 
     public void closeAlert(){
@@ -115,7 +129,8 @@ public class HomePage{
     }
 
     public void assertCategoryHasItems(){
-        int itemsCount = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(items)).size();
+        getItemsList();
+        int itemsCount = list.size();
         Assert.assertTrue(itemsCount > 0);
     }
 }

@@ -55,13 +55,16 @@ public class testScenarios extends baseTest{
         homePage.assertCategoryHasItems();
     }
 
-
-    @Test(priority = 6)
-    public void addRandomItemToCart(){
+    public void addRandomItemToCart() {
         homePage.selectMonitorsCategory();
         homePage.getItemsList();
         itemPage = homePage.selectRandomItem();
         itemPage.addToCart();
+    }
+
+    @Test(priority = 6)
+    public void addRandomItemToCartSuccessfully(){
+        addRandomItemToCart();
         itemPage.assertItemAddedToCartSuccessfully();
         itemPage.closeAlert();
     }
@@ -75,6 +78,10 @@ public class testScenarios extends baseTest{
 
     @Test(priority = 8)
     public void createSuccessfulCheckout(){
+        homePage.selectHome();
+        addRandomItemToCart();
+        itemPage.closeAlert();
+        itemPage.openCart();
         String name = "Sara"; String country = "Egypt"; String city = "Cairo";
         String card = "123245678"; String month = "12"; String year = "27";
         itemPage.openPlaceOrderForm();

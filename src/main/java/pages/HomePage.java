@@ -22,6 +22,7 @@ public class HomePage{
     private final By loginPassword = By.id("loginpassword");
     private final By signUp = By.cssSelector("[onclick = 'register()']");
     private final By login = By.xpath("//button[@onclick='logIn()']");
+    private final By home = By.xpath("//*[@id=\"navbarExample\"]/ul/li[1]/a");
     private final By nameOfUser = By.id("nameofuser");
     private final By phones = By.cssSelector("[onclick=\"byCat('phone')\"]");
     private final By laptops = By.cssSelector("[onclick=\"byCat('notebook')\"]");
@@ -107,6 +108,10 @@ public class HomePage{
         alert.accept();
     }
 
+
+    public void selectHome(){
+        driver.findElement(home).click();
+    }
 
     public void assertFailedSignUp(){
         String actualSignUpMessage = alert.getText();
